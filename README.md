@@ -11,7 +11,7 @@ $ npm install
 ## Running
 
 ```
-$ npm run script -- --latitude <latitude> --longitude <longitude>
+$ npm run check-vaccines -- --latitude <latitude> --longitude <longitude>
 ```
 
 ## Related
