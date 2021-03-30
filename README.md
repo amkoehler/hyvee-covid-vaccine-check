@@ -1,6 +1,8 @@
 # Hyvee Covid Vaccine Check
 
-This command line tool checks for available vaccine appointments based on your provided location. **Please be a good citizen and use this responsibly. Don't use this more than once per minute.**
+This command line tool checks for available vaccine appointments based on your provided location.
+
+⚠ **Please be a good citizen and use this responsibly. Don't use this more than once per minute.**
 
 ## Getting Started
 
