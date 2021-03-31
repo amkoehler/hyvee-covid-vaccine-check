@@ -92,7 +92,12 @@ async function run() {
           covidVaccineEligibilityTerms: location.covidVaccineEligibilityTerms,
         }));
 
-        if (locations.some((l) => l.isCovidVaccineAvailable)) {
+        console.table(locations);
+
+        const vaccinesAvailable = locations.some(
+          (l) => l.isCovidVaccineAvailable
+        );
+        if (vaccinesAvailable) {
           const availableLocations = locations
             .filter((al) => al.isCovidVaccineAvailable)
             .map((al) => al.nickname)
@@ -102,18 +107,22 @@ async function run() {
             {
               title: `Vaccine Appointments Available`,
               message: `Vaccine appointments are available at ${availableLocations}`,
+              open: "https://www.hy-vee.com/my-pharmacy/covid-vaccine-consent",
             },
-            (err, response, metadat) => {
-              console.log(err);
+            (err) => {
+              if (err) {
+                console.error(`Error sending notification`);
+                console.error(err);
+              }
+
+              process.exit(0);
             }
           );
-
-          return;
+        } else {
+          console.info(
+            `No vaccine appointments available. Checking again in 60 seconds.`
+          );
         }
-
-        console.info(
-          `No vaccine appointments available. Checking again in 60 seconds.`
-        );
       })
       .catch((err) => {
         console.error(err);
