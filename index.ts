@@ -93,10 +93,20 @@ async function run() {
         }));
 
         if (locations.some((l) => l.isCovidVaccineAvailable)) {
-          console.log(locations);
-          notifier.notify({
-            title: `💥 Vaccine Appointments Available 💥`,
-          });
+          const availableLocations = locations
+            .filter((al) => al.isCovidVaccineAvailable)
+            .map((al) => al.nickname)
+            .join("\n");
+
+          notifier.notify(
+            {
+              title: `Vaccine Appointments Available`,
+              message: `Vaccine appointments are available at ${availableLocations}`,
+            },
+            (err, response, metadat) => {
+              console.log(err);
+            }
+          );
 
           return;
         }
