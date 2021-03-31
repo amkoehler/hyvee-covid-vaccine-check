@@ -1,15 +1,24 @@
 import { request, gql } from "graphql-request";
 import { Command } from "commander";
-
+import * as fs from "fs";
+import * as notifier from "node-notifier";
 const program = new Command();
 
 program
   .requiredOption("--latitude <value>", "latitude")
-  .requiredOption("--longitude <value>", "longitude");
+  .requiredOption("--longitude <value>", "longitude")
+  .option("--mock", "mock");
 
 program.parse();
 const latitudeStr = program.opts().latitude;
 const longitudeStr = program.opts().longitude;
+const MOCK = program.opts().mock;
+
+function sleep(ms: number) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, ms);
+  });
+}
 
 const query = gql`
   query SearchPharmaciesNearPointWithCovidVaccineAvailability(
@@ -45,23 +54,68 @@ const query = gql`
   }
 `;
 
-request("https://www.hy-vee.com/my-pharmacy/api/graphql", query, {
-  radius: 10,
-  latitude: parseFloat(latitudeStr),
-  longitude: parseFloat(longitudeStr),
-})
-  .then((response) => {
-    const locations = response.searchPharmaciesNearPoint.map(
-      ({ location }) => ({
-        name: location.name,
-        nickname: location.nickname,
-        isCovidVaccineAvailable: location.isCovidVaccineAvailable,
-        covidVaccineEligibilityTerms: location.covidVaccineEligibilityTerms,
-      })
+function getVaccineAppointmentInformation(latitude: string, longitude: string) {
+  if (MOCK) {
+    console.info(
+      `[MOCK] Checking for available vaccine appointments at coordinates [${latitudeStr},${longitudeStr}]`
     );
 
-    console.log(locations);
-  })
+    return Promise.resolve(
+      JSON.parse(fs.readFileSync("mock.json", { encoding: "utf-8" }))
+    );
+  }
+
+  console.info(
+    `Checking for available vaccine appointments at coordinates [${latitudeStr},${longitudeStr}]`
+  );
+
+  return request("https://www.hy-vee.com/my-pharmacy/api/graphql", query, {
+    radius: 10,
+    latitude: parseFloat(latitudeStr),
+    longitude: parseFloat(longitudeStr),
+  });
+}
+
+async function run() {
+  while (true) {
+    getVaccineAppointmentInformation(latitudeStr, longitudeStr)
+      .then((response) => {
+        const locations: {
+          name: string;
+          nickname: string;
+          isCovidVaccineAvailable: boolean;
+          covidVaccineEligibilityTerms: string;
+        }[] = response.searchPharmaciesNearPoint.map(({ location }) => ({
+          name: location.name,
+          nickname: location.nickname,
+          isCovidVaccineAvailable: location.isCovidVaccineAvailable,
+          covidVaccineEligibilityTerms: location.covidVaccineEligibilityTerms,
+        }));
+
+        if (locations.some((l) => l.isCovidVaccineAvailable)) {
+          console.log(locations);
+          notifier.notify({
+            title: `💥 Vaccine Appointments Available 💥`,
+          });
+
+          return;
+        }
+
+        console.info(
+          `No vaccine appointments available. Checking again in 60 seconds.`
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    await sleep(60000);
+  }
+}
+
+run()
+  .then(() => process.exit(0))
   .catch((err) => {
     console.error(err);
+    process.exit(1);
   });

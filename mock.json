@@ -1,0 +1,109 @@
+{
+  "searchPharmaciesNearPoint": [
+    {
+      "distance": 3.169,
+      "location": {
+        "locationId": "b72f1454-62fb-461e-b903-c8fe50e6db67",
+        "name": "Lincoln #4",
+        "nickname": "Williamsburg Hy-Vee",
+        "phoneNumber": "+14024212462",
+        "businessCode": "1388",
+        "isCovidVaccineAvailable": true,
+        "covidVaccineEligibilityTerms": "No eligibility terms defined.",
+        "address": {
+          "line1": "6001 Village Dr",
+          "line2": null,
+          "city": "Lincoln",
+          "state": "NE",
+          "zip": "68516",
+          "latitude": 40.752252,
+          "longitude": -96.666019
+        }
+      }
+    },
+    {
+      "distance": 3.18,
+      "location": {
+        "locationId": "1f902e8d-ac07-41c4-af14-bbb62c56dbaf",
+        "name": "Lincoln #1",
+        "nickname": "O Street Hy-Vee",
+        "phoneNumber": "+14024837707",
+        "businessCode": "1385",
+        "isCovidVaccineAvailable": false,
+        "covidVaccineEligibilityTerms": "No eligibility terms defined.",
+        "address": {
+          "line1": "5010 O St",
+          "line2": null,
+          "city": "Lincoln",
+          "state": "NE",
+          "zip": "68510",
+          "latitude": 40.814596,
+          "longitude": -96.650221
+        }
+      }
+    },
+    {
+      "distance": 4.374,
+      "location": {
+        "locationId": "0d0cee7b-72c9-4b66-adc6-f0b260fb16f9",
+        "name": "Lincoln #5",
+        "nickname": "70th & Pioneers",
+        "phoneNumber": "+14024894244",
+        "businessCode": "1390",
+        "isCovidVaccineAvailable": false,
+        "covidVaccineEligibilityTerms": "No eligibility terms defined.",
+        "address": {
+          "line1": "7151 Stacy Lane",
+          "line2": null,
+          "city": "Lincoln",
+          "state": "NE",
+          "zip": "68516",
+          "latitude": 40.767531,
+          "longitude": -96.622865
+        }
+      }
+    },
+    {
+      "distance": 5.094,
+      "location": {
+        "locationId": "0c680baa-6c7c-4fae-8ecd-68c25c572412",
+        "name": "Lincoln #3",
+        "nickname": "Superior Hy-Vee",
+        "phoneNumber": "+14024774764",
+        "businessCode": "1387",
+        "isCovidVaccineAvailable": false,
+        "covidVaccineEligibilityTerms": "No eligibility terms defined.",
+        "address": {
+          "line1": "5020 N 27th St",
+          "line2": null,
+          "city": "Lincoln",
+          "state": "NE",
+          "zip": "68521",
+          "latitude": 40.861254,
+          "longitude": -96.678579
+        }
+      }
+    },
+    {
+      "distance": 5.583,
+      "location": {
+        "locationId": "05c7ee5d-9dbc-4439-b0ce-1f99a64a271e",
+        "name": "Lincoln #2",
+        "nickname": "Northern Lights Hy-Vee (84th & Holdrege)",
+        "phoneNumber": "+14024675505",
+        "businessCode": "1386",
+        "isCovidVaccineAvailable": false,
+        "covidVaccineEligibilityTerms": "No eligibility terms defined.",
+        "address": {
+          "line1": "1601 North 84th St",
+          "line2": null,
+          "city": "Lincoln",
+          "state": "NE",
+          "zip": "68505",
+          "latitude": 40.829444,
+          "longitude": -96.608403
+        }
+      }
+    }
+  ]
+}
